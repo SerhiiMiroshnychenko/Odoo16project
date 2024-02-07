@@ -1,0 +1,1 @@
+/home/smiroshnychenko/Odoo16project/.venv/bin/python /home/smiroshnychenko/for_odoo16_projects/odoo16/odoo-bin shell -c /home/smiroshnychenko/Odoo16project/odoo.conf -d odoo16prjct
