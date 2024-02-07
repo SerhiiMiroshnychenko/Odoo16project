@@ -15,5 +15,4 @@
     'external_dependencies': {
         'python': ['panda', 'numpy']
     }
-
 }
