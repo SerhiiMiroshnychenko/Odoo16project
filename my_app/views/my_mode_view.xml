@@ -7,88 +7,142 @@
             <field name="model">my.model</field>
             <field name="arch" type="xml">
                 <form string="My Model">
+                    <header>
+                        <button name="action_print_true"
+                                type="object"
+                                string="Print True"
+                                class="oe_highlight"/>
+                        <button name="action_sorted_by_name"
+                                type="object"
+                                string="Sorted by Name"
+                                class="oe_highlight"/>
+                        <button name="action_filtered_by_bool"
+                                type="object"
+                                string="Filtered by Bool"
+                                class="oe_highlight"/>
+                    </header>
                     <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_print_true"
+                                    type="object"
+                                    string="Print True"
+                                    icon="fa-truck"/>
+                        </div>
                         <div class="oe_title">
                             <label for="name"/>
                             <h1>
-                                <field name="name" placeholder="Title"/>
+                                <field name="name" placeholder="Title" string=""/>
                             </h1>
                         </div>
                         <group>
-                            <group>
-                                <field name="long_text"/>
-                                <field name="a_html"/>
-                            </group>
                             <group>
                                 <field name="an_int"/>
                                 <field name="a_float"/>
                             </group>
                             <group>
-                                <field name="a_binary"/>
-                                <field name="an_image"/>
-                            </group>
-                            <group>
-                                <field name="a_date"/>
-                                <field name="a_datetime"/>
-                            </group>
-                            <group>
                                 <field name="a_selection"/>
+                                <field name="a_bool"/>
                             </group>
                         </group>
+                        <notebook>
+                            <page name="Tab 1">
+                                <group>
+                                    <field name="a_date"/>
+                                    <field name="a_datetime"/>
+                                </group>
+                            </page>
+                            <page name="Tab 2">
+                                <group>
+                                    <field name="a_binary"/>
+                                    <field name="an_image"/>
+                                </group>
+                            </page>
+                            <page name="Tab 3">
+                                <group>
+                                    <field name="long_text"/>
+                                    <field name="a_html"/>
+                                </group>
+                            </page>
+                            <page name="Tab 4">
+                                <group>
+                                    <field name="new_model_id"/>
+                                    <field name="new_model_m2m_ids" widget="many2many_tags"/>
+                                </group>
+                                <sheet>
+                                    <group>
+                                        <field name="new_model_o2m_ids"/>
+                                    </group>
+                                </sheet>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
         </record>
 
-<!--        <record id="ModelName_tree_view" model="ir.ui.view">-->
-<!--            <field name="name">ProjectName.ModelName.tree</field>-->
-<!--            <field name="model">ProjectName.ModelName</field>-->
-<!--            <field name="arch" type="xml">-->
-<!--                <tree string="ModelTitle">-->
-<!--                    <field name="create_date"/>-->
-<!--                    <field name="example_field"/>-->
-<!--                </tree>-->
-<!--            </field>-->
-<!--        </record>-->
+        <record id="my_app.my_model_tree_view" model="ir.ui.view">
+            <field name="name">my.model.tree.view</field>
+            <field name="model">my.model</field>
+            <field name="arch" type="xml">
+                <tree string="My Model">
+                    <field name="name"/>
+                    <field name="an_int" optional="show"/>
+                    <field name="a_float" optional="show"/>
+                    <field name="a_bool" optional="show"/>
+                    <field name="a_selection" optional="hide"/>
+                    <field name="a_date" optional="hide"/>
+                    <field name="a_datetime" optional="hide"/>
+                    <field name="a_binary" optional="hide"/>
+                    <field name="an_image" optional="hide"/>
+                    <field name="long_text" optional="hide"/>
+                    <field name="a_html" optional="hide"/>
+                </tree>
+            </field>
+        </record>
 
-<!--        <record id="ModelName_search_view" model="ir.ui.view">-->
-<!--            <field name="name">ProjectName.ModelName.search</field>-->
-<!--            <field name="model">ProjectName.ModelName</field>-->
-<!--            <field name="arch" type="xml">-->
-<!--                <search string="ModelTitle">-->
-<!--                    <group expand="1" string="Group By">-->
-<!--                        <filter string="Example Field" name="example_field" domain="[]"-->
-<!--                                context="{'group_by':'example_field'}"/>-->
-<!--                    </group>-->
-<!--                </search>-->
-<!--            </field>-->
-<!--        </record>-->
+        <record id="my_app.my_model_search_view" model="ir.ui.view">
+            <field name="name">my.model.search.view</field>
+            <field name="model">my.model</field>
+            <field name="arch" type="xml">
+                <search string="My Model">
+                    <field name="name"/>
+                    <field name="an_int"/> <!--Робимо це поле доступним в полі Search (по дефолту тільки "name")-->
+                    <filter name="filter_float_more_then_2"
+                            string="Float > 2"
+                            domain="[('a_float', '>', 2)]"/>
+                    <group expand="1" string="Group By">
+                        <filter string="A Selected Field" name="a_selection" domain="[]"
+                                context="{'group_by':'a_selection'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
 
-<!--        <record id="ModelName_act_window" model="ir.actions.act_window">-->
-<!--            <field name="name">ModelTitle</field>-->
-<!--            <field name="type">ir.actions.act_window</field>-->
-<!--            <field name="res_model">ProjectName.ModelName</field>-->
-<!--            <field name="view_type">form</field>-->
-<!--            <field name="view_mode">tree,form</field>-->
-<!--            <field name="help" type="html">-->
-<!--                <p class="oe_view_nocontent_create">-->
-<!--                    There is no examples click here to add new ModelTitle.-->
-<!--                </p>-->
-<!--            </field>-->
-<!--        </record>-->
-        
+        <!--        <record id="ModelName_act_window" model="ir.actions.act_window">-->
+        <!--            <field name="name">ModelTitle</field>-->
+        <!--            <field name="type">ir.actions.act_window</field>-->
+        <!--            <field name="res_model">ProjectName.ModelName</field>-->
+        <!--            <field name="view_type">form</field>-->
+        <!--            <field name="view_mode">tree,form</field>-->
+        <!--            <field name="help" type="html">-->
+        <!--                <p class="oe_view_nocontent_create">-->
+        <!--                    There is no examples click here to add new ModelTitle.-->
+        <!--                </p>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
         <record id="action_my_model" model="ir.actions.act_window">
             <field name="name">My Model Action</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">my.model</field>
-            <field name="view_mode">form</field>
+            <field name="view_mode">tree,form</field>
         </record>
 
         <menuitem name="My Model Menu"
                   id="my_model_menu_root">
-             <menuitem id="my_model_menu_submenu"
+            <menuitem id="my_model_menu_submenu"
                       action="action_my_model"/>
         </menuitem>
-        
+
     </data>
 </odoo>
