@@ -3,10 +3,15 @@
     'description': '',
     'summary': '',
     'license': 'LGPL-3',
-    'depends': ['base'],
+    'depends': ['base', 'mail', 'website'],
     'data': [
         'security/ir.model.access.csv',
         'views/my_mode_view.xml',
+        'data/ir_cron.xml',
+        'data/ir_actions_server.xml',
+        'wizard/my_wizard_view.xml',
+        'templates/website_templates.xml',
+        'reports/my_report.xml',
     ],
     'assets': {
         'web.assets_backend': [],
