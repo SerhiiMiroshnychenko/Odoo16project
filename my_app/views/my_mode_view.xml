@@ -12,6 +12,10 @@
                                 type="object"
                                 string="Print True"
                                 class="oe_highlight"/>
+                         <button name="print_self"
+                                type="object"
+                                string="Print Self"
+                                class="oe_highlight"/>
                         <button name="action_sorted_by_name"
                                 type="object"
                                 string="Sorted by Name"
@@ -19,6 +23,10 @@
                         <button name="action_filtered_by_bool"
                                 type="object"
                                 string="Filtered by Bool"
+                                class="oe_highlight"/>
+                        <button name="action_change_name"
+                                type="object"
+                                string="Change name"
                                 class="oe_highlight"/>
                     </header>
                     <sheet>
@@ -43,6 +51,7 @@
                                 <field name="a_selection"/>
                                 <field name="a_bool"/>
                             </group>
+                            <field name="contact_id" widget="many2one_avatar"/>
                         </group>
                         <notebook>
                             <page name="Tab 1">
@@ -76,6 +85,11 @@
                             </page>
                         </notebook>
                     </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
                 </form>
             </field>
         </record>
@@ -84,8 +98,18 @@
             <field name="name">my.model.tree.view</field>
             <field name="model">my.model</field>
             <field name="arch" type="xml">
-                <tree string="My Model">
+                <tree string="My Model"
+                      decoration-success="has_especially_contact == True"
+                      decoration-bf="has_especially_contact == True"
+                >
                     <field name="name"/>
+                    <field name="code"/>
+                    <field name="has_especially_contact"
+                           widget="boolean_favorite"
+                           attrs="{'invisible': [('has_especially_contact', '=', False)]}"
+                           nolabel="1"
+                           readonly="1"
+                    />
                     <field name="an_int" optional="show"/>
                     <field name="a_float" optional="show"/>
                     <field name="a_bool" optional="show"/>
@@ -107,6 +131,7 @@
                 <search string="My Model">
                     <field name="name"/>
                     <field name="an_int"/> <!--Робимо це поле доступним в полі Search (по дефолту тільки "name")-->
+                    <field name="code"/>
                     <filter name="filter_float_more_then_2"
                             string="Float > 2"
                             domain="[('a_float', '>', 2)]"/>
