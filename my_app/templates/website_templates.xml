@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="my_route_template">
+            <t t-call="web.frontend_layout">
+                <h1>My Rout Page</h1>
+                <h4>Hello, <span t-out="name"/></h4>
+                <h4>
+                    <t t-if="age > 18">You are old!</t>
+                    <t t-elif="age == 18">You have 18 years old</t>
+                    <t t-else="">You are young!</t>
+                </h4>
+                <h4><span t-out="name"/>, your city is <span t-out="city"/></h4>
+                <div>
+                    Here is the beginning of the Fibonacci suite:
+                </div>
+                <t t-foreach="alist" t-as="fib_number">
+                    <span t-esc="fib_number"/>&amp;nbsp;
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
