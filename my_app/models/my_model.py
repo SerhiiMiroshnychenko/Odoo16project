@@ -5,8 +5,10 @@ from odoo.exceptions import UserError
 class MyModel(models.Model):
     _name = 'my.model'
     _description = 'My Model'
+    _inherit = ['my.abstract.model', 'mail.thread', 'mail.activity.mixin']
 
     name = fields.Char()
+    code = fields.Char(compute='_compute_code', search='_search_code')
     long_text = fields.Text()
     an_int = fields.Integer()
     a_float = fields.Float()
@@ -21,6 +23,8 @@ class MyModel(models.Model):
     new_model_id = fields.Many2one('new.model')
     new_model_m2m_ids = fields.Many2many('new.model', string='New Models')
     new_model_o2m_ids = fields.One2many('new.model', 'my_model_id')
+    contact_id = fields.Many2one('res.partner')
+    has_especially_contact = fields.Boolean(compute='_compute_has_especially_contact', readonly=True)
 
     def action_print_true(self):
         print('True %s %d' % (self, self.id))
@@ -33,12 +37,25 @@ class MyModel(models.Model):
         my_models = self.env['my.model'].search([]).filtered(lambda x: x.a_bool is True).mapped('name')
         print(f"{my_models = }")
 
-    @api.onchange('name')
+    def action_change_name(self):
+        action = {
+            'type': 'ir.actions.act_window',
+            'name': 'My Wizard Popup',
+            'res_model': 'my.wizard',
+            'target': 'new',
+            'view_mode': 'form',
+            'context': {
+                'default_my_model_id': self.id
+            }
+        }
+        return action
+
+    @api.onchange('name')  # Не спрацьовує, якщо змінюється через Wizard
     def _onchange_name(self):
         if self.name:
             self.an_int = len(self.name)
 
-    @api.depends('name')
+    @api.depends('name')  # Спрацьовує, якщо змінюється через Wizard
     def _compute_a_bool(self):
         for rec in self:
             if rec.name and len(rec.name) > 3:
@@ -51,6 +68,34 @@ class MyModel(models.Model):
         for rec in self:
             if rec.name and len(rec.name) >= 10:
                 raise UserError("Name can't be longer then 10 chars.")
+
+    def _add_to_float(self):
+        for m in self.search([]):  # Якщо в тому ж самому модулі
+            m.a_float += 1.0
+
+    def decrease_float_by_1(self):
+        for m in self.browse(self.env.context.get('active_ids')):
+            m.a_float -= 1.0
+
+    def _compute_code(self):
+        for rec in self:
+            if name := rec.name:
+                rec.code = name[0] + str(len(name)) + name[-1]
+
+    def _search_code(self, operator, value):  # Не працює
+        return [('code', operator, value)]
+
+    @api.depends('contact_id')
+    def _compute_has_especially_contact(self):
+        especially_contact_id = int(self.env['ir.config_parameter'].sudo().get_param('my_app.especially_contact_id'))
+        for rec in self:
+            if rec.contact_id and rec.contact_id.id == especially_contact_id:
+                rec.has_especially_contact = True
+            else:
+                rec.has_especially_contact = False
+
+    def get_another_var(self):
+        return f'{self.code} {self.name}'
 
 
 class NewModel(models.Model):
