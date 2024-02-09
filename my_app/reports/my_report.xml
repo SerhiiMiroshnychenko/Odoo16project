@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="report_my_model_document">
+            <t t-call="web.external_layout">
+                <h1>My Model Report</h1>
+                <div>Document for <span t-field="doc.name"/></div>
+                <div>Selection as t-out: <span t-out="doc.a_selection"/></div>
+                <div>Selection as t-field: <span t-field="doc.a_selection"/></div>
+                <div>Selection as t-out: <span t-out="doc"/></div> <!-- З t-field видасть помилку-->
+                <t t-set="special_var" t-value="'Text here!'"/>
+                <div t-out="special_var"/>
+                <t t-set="another_var" t-value="doc.get_another_var()"/>
+                <div t-out="another_var"/>
+            </t>
+        </template>
+
+
+        <template id="report_my_model">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="my_app.report_my_model_document"/>
+                </t>
+            </t>
+        </template>
+
+
+        <record model="ir.actions.report" id="action_report_my_model">
+            <field name="name">Print Report</field>
+            <field name="model">my.model</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">my_app.report_my_model</field>
+            <field name="report_file">my_app.report_my_model</field>
+            <field name="binding_type">report</field>
+            <field name="binding_model_id" ref="my_app.model_my_model"/>
+        </record>
+
+
+    </data>
+</odoo>
