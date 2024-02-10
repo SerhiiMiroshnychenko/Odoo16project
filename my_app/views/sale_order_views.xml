@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="sale_order_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="priority" eval="98"/> <!-- Кастомні ставлять з priority 98 (99 - це Студія)-->
+            <field name="arch" type="xml">
+                <field name="sale_order_template_id" position="after">
+                    <field name="custom_date"/>
+                </field>
+                <xpath expr="//field[@name='sale_order_template_id']" position="before">
+                    <field name="my_model_id"/>
+                </xpath>
+<!--                <xpath expr="//field[@name='example_field']" position="attributes">-->
+<!--                    <attribute name="invisible">True</attribute>-->
+<!--                </xpath>-->
+            </field>
+        </record>
+    </data>
+</odoo>
