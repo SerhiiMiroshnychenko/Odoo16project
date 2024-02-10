@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_saleorder_document"
+              inherit_id="sale.report_saleorder_document"
+              priority="98"
+    >
+        <xpath expr="//div[@id='informations']" position="inside">
+            <div class="col-auto col-3 mw-100 mb-2">
+                <strong>My Specific Data:</strong>
+                <p>To be continued...</p>
+            </div>
+            <div t-if="doc.custom_date" class="col-auto col-3 mw-100 mb-2">
+                <strong>Custom Date:</strong>
+                <p><span t-field="doc.custom_date"/></p>
+            </div>
+        </xpath>
+    </template>
+</odoo>
