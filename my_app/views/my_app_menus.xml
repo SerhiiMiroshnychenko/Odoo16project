@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+        <menuitem id="my_app_menu_root" name="My App">
+            <menuitem id="my_app_first_level_menu" name="My App Models">
+                <menuitem id="menu_my_model"
+                          name="My Model"
+                          action="action_my_model"/>
+                <menuitem id="menu_complex_model"
+                          name="Complex Model"
+                          action="complex_model_act_window"/>
+            </menuitem>
+<!--            <menuitem id="estate_settings_first_level_menu" name="Settings">-->
+<!--                <menuitem id="estate_property_type_menu_action"-->
+<!--                          name="Property Types"-->
+<!--                          action="estate_property_type_action"/>-->
+<!--                <menuitem id="estate_property_tag_menu_action"-->
+<!--                          name="Property Tags"-->
+<!--                          action="estate_property_tag_action"/>-->
+<!--            </menuitem>-->
+        </menuitem>
+    </data>
+</odoo>
