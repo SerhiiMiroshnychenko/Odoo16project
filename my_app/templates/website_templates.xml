@@ -17,6 +17,12 @@
                 <t t-foreach="alist" t-as="fib_number">
                     <span t-esc="fib_number"/>&amp;nbsp;
                 </t>
+                <div t-if="a_float">
+                    A Float: <span t-out="a_float" t-options='{"widget": "float", "precision": 2}'/>
+                </div>
+                <t t-set="float_var" t-value="'%.3f'%a_float"/>
+                <div t-out="float_var"/>
+                <div t-out="'%.4f'%a_float"/>
             </t>
         </template>
     </data>
