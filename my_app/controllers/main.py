@@ -9,6 +9,7 @@ class Main(Controller):
             'name': 'Serhii',
             'city': 'Mariupol',
             'age': 42,
-            'alist': [1, 2, 3, 5, 8]
+            'alist': [1, 2, 3, 5, 8],
+            'a_float': 1.23456789,
         }
         return request.render('my_app.my_route_template', values)
