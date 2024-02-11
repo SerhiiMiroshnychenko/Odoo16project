@@ -11,14 +11,14 @@ class MyModel(models.Model):
     code = fields.Char(compute='_compute_code', search='_search_code')
     long_text = fields.Text()
     an_int = fields.Integer()
-    a_float = fields.Float()
+    a_float = fields.Float(digits=(10, 3))
     a_bool = fields.Boolean(compute='_compute_a_bool', store=True)
     a_date = fields.Date()
     a_datetime = fields.Datetime()
     a_selection = fields.Selection([('option1', 'Option1'), ('option2', 'Option2')])
     a_html = fields.Html()
-    a_binary = fields.Binary()
-    an_image = fields.Image()
+    a_binary = fields.Binary(attachment=True)  # Зберігається в ir.attachment
+    an_image = fields.Image(attachment=False)  # Зберігається в my.model
 
     new_model_id = fields.Many2one('new.model')
     new_model_m2m_ids = fields.Many2many('new.model', string='New Models')
