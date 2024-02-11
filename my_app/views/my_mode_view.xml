@@ -63,7 +63,7 @@
                             <page name="Tab 2">
                                 <group>
                                     <field name="a_binary"/>
-                                    <field name="an_image"/>
+                                    <field name="an_image" widget="image"/>
                                 </group>
                             </page>
                             <page name="Tab 3">
@@ -111,7 +111,7 @@
                            readonly="1"
                     />
                     <field name="an_int" optional="show"/>
-                    <field name="a_float" optional="show"/>
+                    <field name="a_float" optional="show" digits="2"/>
                     <field name="a_bool" optional="show"/>
                     <field name="a_selection" optional="hide"/>
                     <field name="a_date" optional="hide"/>
@@ -162,12 +162,6 @@
             <field name="res_model">my.model</field>
             <field name="view_mode">tree,form</field>
         </record>
-
-        <menuitem name="My Model Menu"
-                  id="my_model_menu_root">
-            <menuitem id="my_model_menu_submenu"
-                      action="action_my_model"/>
-        </menuitem>
 
     </data>
 </odoo>
