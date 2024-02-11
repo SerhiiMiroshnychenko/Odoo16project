@@ -2,3 +2,4 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 my_app.access_my_model,access_my_model,my_app.model_my_model,base.group_user,1,1,1,1
 my_app.access_new_model,access_new_model,my_app.model_new_model,base.group_user,1,1,1,1
 my_app.access_my_wizard,access_my_wizard,my_app.model_my_wizard,base.group_user,1,1,1,1
+my_app.access_complex_model,access_complex_model,my_app.model_complex_model,base.group_user,1,1,1,1
