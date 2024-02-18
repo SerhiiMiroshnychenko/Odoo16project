@@ -82,8 +82,9 @@ class MyModel(models.Model):
             if name := rec.name:
                 rec.code = name[0] + str(len(name)) + name[-1]
 
-    def _search_code(self, operator, value):  # Не працює
-        return [('code', operator, value)]
+    def _search_code(self, operator, value):  # Тепер працює! :-)
+        field_ids = self.search([]).filtered(lambda x: value in x.code)
+        return [('id', 'in', [x for x in field_ids.ids] if field_ids else False)]
 
     @api.depends('contact_id')
     def _compute_has_especially_contact(self):
